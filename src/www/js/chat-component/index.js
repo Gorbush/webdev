@@ -23,6 +23,10 @@
 //
 //   https://github.com/pjones/wschat
 //
+// TO START SERVER:
+// npm start
+// npm run chat
+//
 //  TO TEST IN CLI:
 // npm install -g wscat
 // wscat -c ws://localhost:3030
