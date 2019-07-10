@@ -29,6 +29,17 @@ describe("Jasmine Exercise 3", function() {
     // Write a test the confirms that the `add' method of the
     // `DelayedAdder' class works correctly.  Keep in mind that `add'
     // is asynchronous function and returns a promise instead of a number.
+    it("delayed adding returns correct result", function() {
+      let adder = new DelayedAdder();
+      let p = adder.add(1, 2);
+
+      expect(p instanceof Promise).toBeTruthy();
+      p.then(value => {
+        expect(value).toBe(3);
+      }).catch(() => {
+        fail();
+      })
+    });
 
 
   });
