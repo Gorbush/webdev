@@ -16,5 +16,7 @@
 function getArtists(id) {
 
   // Your code goes here.
-
+  let targetUrl = "/api/artists" + (id ? ("/"+id) : ""); 
+  return fetch(targetUrl)
+    .then(response => response.json() );
 }

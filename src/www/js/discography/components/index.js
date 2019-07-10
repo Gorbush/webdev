@@ -10,6 +10,10 @@ class ArtistList extends HTMLElement {
   // the next exercise.
   constructor() {
     super();
+    
+    const template = document.getElementById("artists-list-template");
+    const shadowRoot = this.attachShadow({mode: "open"});
+    shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
   // Exercise 2:
@@ -18,6 +22,18 @@ class ArtistList extends HTMLElement {
   // template's `<ul>' element.  Start simple by just inserting the
   // the name of the artist.
   connectedCallback() {
+    let self = this;
+    fetch('/api/artists')
+      .then( response => response.json())
+      .then( artists => {
+        var ul = self.shadowRoot.querySelector('.main-artists-list');
+        ul.innerHTML = '';
+        artists.forEach( artist => {
+          const li = document.createElement("li");
+          li.textContent = artist.name;
+          ul.append(li);
+        });
+      });
   }
 }
 

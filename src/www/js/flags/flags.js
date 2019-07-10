@@ -65,3 +65,4 @@
  */
 
 // Your code here.
+var list = document.querySelectorAll("contains(text(),'FLAG')");

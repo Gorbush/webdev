@@ -1,4 +1,4 @@
-class ArtistDetail extends HTMLElement {
+class ArtistShortDetail extends HTMLElement {
 
   // Exercise 3:
   //
@@ -25,7 +25,9 @@ class ArtistDetail extends HTMLElement {
   //
   // For an example, see: http://localhost:3000/js/demo/
   connectedCallback() {
+    shadowRoot.querySelector(".artist-year").innerHTML = 'artName';
+    shadowRoot.querySelector(".artist-name").innerHTML = '2222';
   }
 }
 
-customElements.define("artist-detail", ArtistDetail);
+customElements.define("artist-short-detail", ArtistShortDetail);

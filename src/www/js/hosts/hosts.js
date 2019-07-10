@@ -47,4 +47,38 @@
  *
  * Make sure your tests still pass.
  */
-Hosts = undefined;
+Hosts = function (){
+  let mapping = new Map();
+  return {
+    add: function(name, address) {
+      let ips = mapping.get(name);
+      if (!ips) {
+        ips = new Set();
+        mapping.set(name, ips);    
+      }
+      ips.add(address);
+    },
+    lookupByName: function(name) {
+      if (!name) {
+        return [];
+      }
+      let ips = mapping.get(name);
+      if (!ips) {
+        return [];
+      }
+      return Array.from(ips);
+    },
+    lookupByIP: function(address) {
+      let names = [];
+      mapping.forEach((value, key) => {
+        if (value.has(address)) {
+          names.push(key);
+        }
+      });
+      return names;
+    },
+    clear: function() {
+      mapping = new Map();
+    }
+  }
+}();

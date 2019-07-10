@@ -9,13 +9,29 @@
   <h1>Discography</h1>
 
   <!-- List of artists! -->
-  <artist-list></artist-list>
+  <artist-list >
+    <span slot="artist-header">New Artists list</span>
+    <slot name="artist-data"><artist-short-detail>short-detail</artist-short-detail></slot>
+  </artist-list>
 
   <!-- Live Chat! -->
   <chat-box data-host="localhost:3030" data-user="Ryan"></chat-box>
 
   <!-- Write your templates here -->
+  <template id="artists-list-template">
+    <h3><slot  name="artist-header">Artists list is below: </slot></h3>
+    <ul class="main-artists-list">
+      <li class="artist-info-line">
+        artist is art-Info: <slot name="artist-data">artist-detail</slot>
+      </li>
+    </ul>
+  </template>
 
+  <template id="artist-detail-template">
+    <b><span class="artist-name">art-name</span></b>
+    <i><span class="artist-year">1980</span></i>
+  </template>
+  
   <!-- Bring in our JavaScript files -->
   <script src="../ajax/ajax.js"></script>
   <script src="components/show.js"></script>

@@ -13,3 +13,26 @@
 
 
 // Your code here.
+var body = document.getElementsByTagName("body");
+
+body[0].addEventListener("click", clickHandler);
+
+function incGlobalCounter() {
+  var global_counter = document.getElementById("global_counter");
+  global_counter.innerText++;
+  var counterValue = parseInt(global_counter.innerText);
+  if (counterValue > 10) {
+    global_counter.classList.add("goal");
+  }
+}
+
+function clickHandler (event) {
+    // if (event.target.tagName === 'BUTTON') {
+    if (event.target.innerText && event.target.innerText.toLowerCase() === 'click me') {
+        var pairedCounter = event.target.nextElementSibling;
+        pairedCounter.innerText++;
+        
+        incGlobalCounter();
+        event.preventDefault();
+    }
+}
