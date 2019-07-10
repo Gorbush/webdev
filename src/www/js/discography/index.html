@@ -11,7 +11,7 @@
   <!-- List of artists! -->
   <artist-list >
     <span slot="artist-header">New Artists list</span>
-    <slot name="artist-data"><artist-short-detail>short-detail</artist-short-detail></slot>
+    <span slot="artist-data"><artist-short-detail>short-detail</artist-short-detail></span>
   </artist-list>
 
   <!-- Live Chat! -->
@@ -22,14 +22,15 @@
     <h3><slot  name="artist-header">Artists list is below: </slot></h3>
     <ul class="main-artists-list">
       <li class="artist-info-line">
-        artist is art-Info: <slot name="artist-data">artist-detail</slot>
+        None
       </li>
     </ul>
   </template>
 
   <template id="artist-detail-template">
-    <b><span class="artist-name">art-name</span></b>
-    <i><span class="artist-year">1980</span></i>
+    <b><span class="artist-name"><slot name="artist-name">art-name</slot></span></b>&nbsp;
+    <i><span class="artist-year"><slot name="artist-year">1980</slot></span></i>&nbsp;
+    <ul class="albums"><li>None</li></ul>
   </template>
   
   <!-- Bring in our JavaScript files -->

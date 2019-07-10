@@ -30,8 +30,13 @@ class ArtistList extends HTMLElement {
         ul.innerHTML = '';
         artists.forEach( artist => {
           const li = document.createElement("li");
-          li.textContent = artist.name;
+          let artistDetail = document.createElement("artist-detail");
+          artistDetail.setAttribute("data-id", artist.id);
+          artistDetail.innerHTML = 
+              `<span slot='artist-name'>${artist.name}</span>`+
+              `<span slot='artist-year'>${artist.formation_year}</span>`;
           ul.append(li);
+          li.appendChild(artistDetail);
         });
       });
   }

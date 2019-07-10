@@ -10,7 +10,7 @@ class ArtistDetail extends HTMLElement {
   // it create `<artist-detail>' elements with the correct slots.
   constructor() {
     super();
-    const template = document.getElementById("artists-detail-template");
+    const template = document.getElementById("artist-detail-template");
     const shadowRoot = this.attachShadow({mode: "open"});
     shadowRoot.appendChild(template.content.cloneNode(true));
   }
@@ -25,6 +25,20 @@ class ArtistDetail extends HTMLElement {
   //
   // For an example, see: http://localhost:3000/js/demo/
   connectedCallback() {
+    let self = this;
+    let userId = self.getAttribute("data-id");
+    fetch(`/api/artists/${userId}/albums`)
+      .then( response => response.json())
+      .then( albums => {
+        var ul = self.shadowRoot.querySelector('.albums');
+        ul.innerHTML = '';
+        albums.forEach( album => {
+          const li = document.createElement("li");
+          li.textContent = album.name;
+          ul.append(li);
+        });
+      });
+
   }
 }
 
