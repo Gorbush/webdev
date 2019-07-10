@@ -23,10 +23,17 @@
 //
 //   https://github.com/pjones/wschat
 //
+//  TO TEST IN CLI:
+// npm install -g wscat
+// wscat -c ws://localhost:3030
+// and send there {"user":"root","message":'test 222'}
 class ChatBox extends HTMLElement {
   // Set up the shadow DOM:
   constructor() {
     super();
+    const template = document.getElementById("chat_template");
+    const shadowRoot = this.attachShadow({mode: "open"});
+    shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
   // Create a new WebSocket and set up callbacks for sending and
@@ -35,7 +42,25 @@ class ChatBox extends HTMLElement {
   // If you get stuck here is an example implementation:
   //
   //   https://github.com/pjones/wschat/blob/master/examples/example.js
-  connectedCallback() {}
+  connectedCallback() {
+    var host = this.getAttribute("data-host");
+    var userName = this.getAttribute("data-user");
+    
+    let ws = new WebSocket("ws://" + host);
+    ws.onopen = function() {
+      console.log("connected to WebSocket server");
+      let messageString = JSON.stringify(messageObject, 2);
+      ws.send(messageString);
+      console.log("Send ping from "+userName);
+    };
+    ws.onmessage = function(e) {
+      console.log("incoming message: " + e.data);
+    };
+    let messageObject = {
+      user: userName,
+      message: "Connected "+userName
+    };
+  }
 }
 
 customElements.define("chat-box", ChatBox);

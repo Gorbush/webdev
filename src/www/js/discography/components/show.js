@@ -38,7 +38,6 @@ class ArtistDetail extends HTMLElement {
           ul.append(li);
         });
       });
-
   }
 }
 
