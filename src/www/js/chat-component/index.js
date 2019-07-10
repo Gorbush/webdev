@@ -30,7 +30,7 @@
 //  TO TEST IN CLI:
 // npm install -g wscat
 // wscat -c ws://localhost:3030
-// and send there {"user":"root","message":'test 222'}
+// and send there {"user":"root", "message":"Test"}
 class ChatBox extends HTMLElement {
   // Set up the shadow DOM:
   constructor() {
@@ -51,19 +51,38 @@ class ChatBox extends HTMLElement {
     var userName = this.getAttribute("data-user");
     
     let ws = new WebSocket("ws://" + host);
-    ws.onopen = function() {
-      console.log("connected to WebSocket server");
+    var opened = false;
+    
+    function sendMessage(msg) {
+      let messageObject = {
+        user: userName,
+        message: msg
+      };
       let messageString = JSON.stringify(messageObject, 2);
       ws.send(messageString);
+    }
+    ws.onopen = function() {
+      console.log("connected to WebSocket server");
+      opened = true;
       console.log("Send ping from "+userName);
+      sendMessage("Connected "+userName);
     };
+    var messages = this.shadowRoot.getElementById("messages");
     ws.onmessage = function(e) {
       console.log("incoming message: " + e.data);
+      let newMessage =document.createElement("li");
+      let info = JSON.parse(e.data);
+      newMessage.innerHTML = `<strong>${info.user}</strong> said: ${info.message}`;
+      messages.appendChild(newMessage);
     };
-    let messageObject = {
-      user: userName,
-      message: "Connected "+userName
-    };
+    
+    var submit = this.shadowRoot.querySelector("input[type=submit]");
+    submit.addEventListener("click", (e) => {
+      e.preventDefault();
+      var messageText = this.shadowRoot.querySelector("input[type=text]");
+      sendMessage(messageText.value);
+    });
+
   }
 }
 
